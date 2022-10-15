@@ -1,3 +1,4 @@
+//adi b
 public class GuitarString {
     private RingBuffer buffer; // ring buffer
     int SAMPLILNG_RATE = 44100;

@@ -1,5 +1,5 @@
 import java.util.Arrays;
-
+//adi bhattacharya
 public class RingBuffer {
     private double[] data; // items in the buffer
     private int first; // index for the next dequeue or peek
