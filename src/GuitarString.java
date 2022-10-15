@@ -2,13 +2,14 @@ public class GuitarString {
     private RingBuffer buffer; // ring buffer
     int SAMPLILNG_RATE = 44100;
     int ticnum = 0;
+    int N;
 
     // YOUR OTHER INSTANCE VARIABLES HERE
 
     /** create a guitar string of the given frequency */
     public GuitarString(double frequency) {
         // YOUR CODE HERE
-        int N = (int) Math.round(SAMPLILNG_RATE / frequency);
+        N = (int) Math.round(SAMPLILNG_RATE / frequency);
         buffer = new RingBuffer(N);
 
     }
@@ -34,22 +35,29 @@ public class GuitarString {
         while (!buffer.isEmpty()) {
             buffer.dequeue();
         }
-        
 
-        while (!buffer.isFull()) {
-
-            buffer.enqueue(round(Math.random() - 0.5, 1));
+        for (int i = 0; i < N; i++) {
+            buffer.enqueue(round((Math.random() * 1.01) - 0.5, 1));
         }
+
     }
 
     /** advance the simulation one time step */
     public void tic() {
         // YOUR CODE HERE
-        double x = buffer.dequeue();
-        double y = buffer.peek();
-        double eq = ((x + y) * 0.5) * .994;
-        buffer.enqueue(eq);
-        ticnum++;
+        if (buffer.size() >= 2) {
+            ticnum++;
+            double x = buffer.dequeue();
+            double y = buffer.peek();
+            double eq = ((x + y) * 0.5) * .996;
+            buffer.enqueue(eq);
+
+        } else {
+            while (!buffer.isEmpty()) {
+                buffer.dequeue();
+            }
+        }
+
     }
 
     /** return the current sample */
