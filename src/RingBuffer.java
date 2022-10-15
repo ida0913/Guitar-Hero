@@ -78,9 +78,9 @@ public class RingBuffer {
         return data[first]; // REPLACE
     }
 
-    public String toString() {
-        return Arrays.toString(data);
-    }
+    // public String toString() {
+    //     return Arrays.toString(data);
+    // }
 
     /** a simple test of the constructor and methods in RingBuffer */
     public static void main(String[] args) {
