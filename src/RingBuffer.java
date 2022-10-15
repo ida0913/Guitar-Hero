@@ -78,7 +78,7 @@ public class RingBuffer {
         return data[first]; // REPLACE
     }
 
-    public String toString(){
+    public String toString() {
         return Arrays.toString(data);
     }
 
@@ -97,7 +97,7 @@ public class RingBuffer {
             double y = buffer.dequeue();
             buffer.enqueue(x + y);
         }
-        
+
         System.out.println(buffer.peek());
 
         /*
