@@ -10,10 +10,15 @@ public class RingBuffer {
     public RingBuffer(int capacity) {
         // YOUR CODE HERE
         data = new double[capacity];
+        for(int i = 0; i<data.length; i++){
+            data[i] = Double.NaN;
+        }
         first = capacity / 2;
         last = first;
 
     }
+
+
 
     /** return number of items currently in the buffer */
     public int size() {
@@ -21,7 +26,7 @@ public class RingBuffer {
         int count = 0;
         // System.out.println(Arrays.toString(data));
         for (int i = 0; i < data.length; i++) {
-            if (data[i] != 0.0) {
+            if (!Double.isNaN(data[i])) {
                 count++;
             }
         }
@@ -32,6 +37,7 @@ public class RingBuffer {
 
     /** is the buffer empty (size equals zero)? */
     public boolean isEmpty() {
+        size();
         // YOUR CODE HERE
         return size == 0;
         // REPLACE
@@ -48,12 +54,16 @@ public class RingBuffer {
     public void enqueue(double x) {
         // YOUR CODE HERE
         size();
-        if (this.isFull())
-            throw new RuntimeException();
+
+           
+
+        
         data[last] = x;
         last++;
         if (last == data.length)
             last = 0;
+
+        // if(isFull()) throw new RuntimeException();     
 
     }
 
@@ -61,13 +71,15 @@ public class RingBuffer {
     public double dequeue() {
         // YOUR CODE HERE
         size();
-        if (this.isEmpty())
-            throw new RuntimeException();
+
+        if(isEmpty()) throw new RuntimeException();        
+
         double temp = data[first];
-        data[first] = 0.0;
+        data[first] = Double.NaN;
         first++;
         if (first == data.length)
             first = 0;
+   
         return temp; // REPLACE
     }
 
@@ -78,9 +90,9 @@ public class RingBuffer {
         return data[first]; // REPLACE
     }
 
-    // public String toString() {
-    //     return Arrays.toString(data);
-    // }
+    public String toString() {
+        return Arrays.toString(data);
+    }
 
     /** a simple test of the constructor and methods in RingBuffer */
     public static void main(String[] args) {
@@ -89,13 +101,16 @@ public class RingBuffer {
         for (int i = 1; i <= N; i++) {
             buffer.enqueue(i);
         }
+        // while (!buffer.isEmpty()) {
+        //     buffer.dequeue();
+        // }
         double t = buffer.dequeue();
         buffer.enqueue(t);
         System.out.println("Size after wrap-around is " + buffer.size());
         while (buffer.size() >= 2) {
-            double x = buffer.dequeue();
-            double y = buffer.dequeue();
-            buffer.enqueue(x + y);
+        double x = buffer.dequeue();
+        double y = buffer.dequeue();
+        buffer.enqueue(x + y);
         }
 
         System.out.println(buffer.peek());
